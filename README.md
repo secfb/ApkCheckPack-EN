@@ -28,6 +28,9 @@ Implemented in Go; rules are bundled into a single executable for convenience.
 
 Download the compiled binary from Releases and run it on a file or a directory (GUI version has been dropped).
 
+<img width="1128" height="791" alt="image" src="https://github.com/user-attachments/assets/5e8a6279-be1d-4f40-a8ba-826fc0f98b15" />
+
+
 ![gui](fun.png)
 
 Use the `-hardcode` parameter to enable full-file hardcoded-data scanning. Note the default limit scans up to 500 MB of internal files.
