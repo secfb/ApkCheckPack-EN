@@ -1,40 +1,36 @@
 # ApkCheckPack
 
-**欢迎大家提交规则，或留意无法识别的加固app（提供demo或vt类下载哈希），争取每季度更新**
+Welcome everyone to submit rules or report protected apps that cannot be identified (please provide a demo or a VT download hash). We aim to update quarterly.
 
-**说明**
+Tools are only auxiliary. New techniques and vendors keep appearing, and signature/feature-based searches may miss things. Do not rely on them entirely.
 
-English Please look: ./README_EN.md
+Due to significant changes, the tool has been renamed to ApkCheckPack. It is likely the most comprehensive open-source tool for Android app protection/hardening rules.
 
-工具只是辅助，新方式和厂商不断出现，特征查找方式可能遗漏，切勿完全依赖
+We aggregate all protection indicators we can collect and support detection for 40 vendors. The data is stored in `apkpackdata.json` with the following fields. Feel free to use it if needed (protection rules updated: 2025-06-24; third-party SDK rules updated: 2024-09-22).
 
-由于变动较大，工具更名为ApkCheckPack，大概是加固规则最全的开源工具：）
+- `sopath` Absolute-path signature SO
+- `soname` Signature SO filename only
+- `other` Other signature files or strings
+- `soregex` Regex for versioned signature SO libraries
 
-将能收集到的加固特征汇总整理，支持40个厂商的加固检测，保存在apkpackdata.json文件，格式如下，有需求自取（加固规则更新时间 20250624，第三方SDK规则更新时间 20240922）
+Supported features
 
-    sopath 绝对路径的特征so
-    soname 仅特征so文件名
-    other 其他特征文件、字符串
-    soregex 对有版本号的特征so库，使用正则匹配
+- √ Protection signature scan: compare protector SO library names/paths to determine if protection is present
+- √ Anti-environment checks: scan DEX files for root, emulator, and anti-debugging detection
+- √ Framework/SDK scan: scan signature SO names to detect third-party SDKs
+- √ Anti-proxy detection: scan for proxy-detection class names to identify anti-proxy checks
+- √ Embedded APK scan: some protectors embed multiple APK files inside the APK
+- √ Certificate file scan: find certificate files by suffix and output their information
+- X (temporarily removed) Signature verification: verify V2 signature to determine if the Janus vulnerability exists
+- √ Secret leakage: scan APK contents for key-like strings
 
-支持的功能
+Implemented in Go; rules are bundled into a single executable for convenience.
 
-    √ 加固特征扫描：通过对比加固特征so库名/路径，判断是否有加固
-    √ 反环境检测：扫描Dex文件搜索是否有Root、模拟器、反调试检测
-    √ 开发框架扫描：扫描特征so库名，判断是否有第三方SDK
-    √ 反代理检测：扫描代理检测类名，判断是否有反代理
-    √ 内嵌APK扫描：某些加固会在APK内嵌多个APK文件
-    √ 证书文件扫描：按后缀扫描证书文件并输出信息
-    X （临时取消）校验签名：校验V2签名，判断是否存在Janus漏洞
-    √ 密钥泄露：扫描Apk文件内容，匹配是否有密钥字符串
-
-改用go语言实现，规则也集成到单exe使用更方便
-
-到releases下载编译好的文件，后面跟文件或文件夹执行（已放弃GUI版本）
+Download the compiled binary from Releases and run it on a file or a directory (GUI version has been dropped).
 
 ![gui](fun.png)
 
-使用参数-hardcode开启全文件硬编码信息扫描，同时注意默认最大扫500MB内部文件
+Use the `-hardcode` parameter to enable full-file hardcoded-data scanning. Note the default limit scans up to 500 MB of internal files.
 
     ApkCheckPack.exe -hardcode true -f test.apk
 
