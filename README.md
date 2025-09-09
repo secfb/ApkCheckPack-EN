@@ -38,3 +38,7 @@ Use the `-hardcode` parameter to enable full-file hardcoded-data scanning. Note 
     ApkCheckPack.exe -hardcode true -f test.apk
 
 ![gui2](help.png)
+
+This project is the English version of the tool below. There are no Chinese words.
+
+https://github.com/moyuwa/ApkCheckPack
